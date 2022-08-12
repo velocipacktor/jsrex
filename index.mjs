@@ -21,16 +21,12 @@ export default class Trex extends events.EventEmitter {
     };
   }
 
-  api_h() {
-    return this._api_h;
-  }
-
   async connect() {
     await this.zmqSock.connect(this.options.server);
     this.emit('connected');
     this.connected = true;
-    this._api_h = await this.methods.api_sync_v2();
-    return this._api_h;
+    this.api_h = await this.methods.api_sync_v2();
+    return this.api_h;
   }
 
   async send(method, params) {
@@ -41,7 +37,7 @@ export default class Trex extends events.EventEmitter {
       params: params,
     };
 
-    msg.params.api_h = this.api_h();
+    msg.params.api_h = this.api_h;
     msg.params.user = 'trex';
 
     console.log(msg);
