@@ -5,16 +5,19 @@ import { v4 as uuid } from 'uuid';
 import { default as events } from 'events';
 import { default as clog } from 'ee-log';
 
-import { acquire as _acquire } from './src/methods/acquire.mjs';
-import { api_sync_v2 } from './src/methods/api_sync_v2.mjs';
-import { get_global_stats } from './src/methods/get_global_stats.mjs';
-import { get_port_status } from './src/methods/get_port_status.mjs';
-import { get_profile_list } from './src/methods/get_profile_list.mjs';
-import { profile_fragment } from './src/methods/profile_fragment.mjs';
-import { profile_clear } from './src/methods/profile_clear.mjs';
-import { release } from './src/methods/release.mjs';
-import { start } from './src/methods/start.mjs';
-import { stop } from './src/methods/stop.mjs';
+// Common
+import { acquire as _acquire } from './src/methods/common/acquire.mjs';
+import { api_sync_v2 as _api_sync_v2 } from './src/methods/common/api_sync_v2.mjs';
+import { get_global_stats as _get_global_stats } from './src/methods/common/get_global_stats.mjs';
+import { get_port_status as _get_port_status } from './src/methods/common/get_port_status.mjs';
+import { release as _release } from './src/methods/common/release.mjs';
+
+// ASTF
+import { get_profile_list as _get_profile_list } from './src/methods/astf/get_profile_list.mjs';
+import { profile_fragment as _profile_fragment } from './src/methods/astf/profile_fragment.mjs';
+import { profile_clear as _profile_clear } from './src/methods/astf/profile_clear.mjs';
+import { start as _start } from './src/methods/astf/start.mjs';
+import { stop as _stop } from './src/methods/astf/stop.mjs';
 
 export default class Trex extends events.EventEmitter {
   constructor(options) {
@@ -31,15 +34,19 @@ export default class Trex extends events.EventEmitter {
     this.connected = false;
 
     // Methods
-    this.api_sync_v2 = api_sync_v2.bind(this);
-    this.get_global_stats = get_global_stats.bind(this);
-    this.get_port_status = get_port_status.bind(this);
-    this.get_profile_list = get_profile_list.bind(this);
-    this.profile_fragment = profile_fragment.bind(this);
-    this.profile_clear = profile_clear.bind(this);
-    this.release = release.bind(this);
-    this.start = start.bind(this);
-    this.stop = stop.bind(this);
+    // Common
+    this.acquire = _acquire.bind(this);
+    this.api_sync_v2 = _api_sync_v2.bind(this);
+    this.get_global_stats = _get_global_stats.bind(this);
+    this.get_port_status = _get_port_status.bind(this);
+    this.release = _release.bind(this);
+
+    // ASTF
+    this.get_profile_list = _get_profile_list.bind(this);
+    this.profile_fragment = _profile_fragment.bind(this);
+    this.profile_clear = _profile_clear.bind(this);
+    this.start = _start.bind(this);
+    this.stop = _stop.bind(this);
   }
 
   //
@@ -92,14 +99,5 @@ export default class Trex extends events.EventEmitter {
 
     // And return the result
     return json;
-  }
-
-  async acquire(params) {
-    params.api_h = this.api_h;
-    // Acquire
-    const __acquire = _acquire.bind(this);
-    const response = await __acquire(params);
-    this.handler = response.result.handler;
-    return response;
   }
 }
