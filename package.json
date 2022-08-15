@@ -15,6 +15,7 @@
   "homepage": "https://github.com/velocipacktor/jsrex#readme",
   "dependencies": {
     "ee-log": "^3.0.9",
+    "hjson": "^3.2.2",
     "uuid": "^8.3.2",
     "zeromq": "^6.0.0-beta.6"
   },

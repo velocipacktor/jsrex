@@ -1,0 +1,78 @@
+{
+  "buf_list": [
+    "R0VUIC8zMzg0IEhUVFAvMS4xDQpIb3N0OiAyMi4wLjAuMw0KQ29ubmVjdGlvbjogS2VlcC1BbGl2ZQ0KVXNlci1BZ2VudDogTW96aWxsYS80LjAgKGNvbXBhdGlibGU7IE1TSUUgNy4wOyBXaW5kb3dzIE5UIDUuMTsgU1YxOyAuTkVUIENMUiAxLjEuNDMyMjsgLk5FVCBDTFIgMi4wLjUwNzI3KQ0KQWNjZXB0OiAqLyoNCkFjY2VwdC1MYW5ndWFnZTogZW4tdXMNCkFjY2VwdC1FbmNvZGluZzogZ3ppcCwgZGVmbGF0ZSwgY29tcHJlc3MNCg0K",
+    "SFRUUC8xLjEgMjAwIE9LDQpTZXJ2ZXI6IE1pY3Jvc29mdC1JSVMvNi4wDQpDb250ZW50LVR5cGU6IHRleHQvaHRtbA0KQ29udGVudC1MZW5ndGg6IDMyMDAwDQoNCjxodG1sPjxwcmU+KioqKioqKioqKjwvcHJlPjwvaHRtbD4="
+  ],
+  "ip_gen_dist_list": [
+    {
+      "dir": "c",
+      "distribution": "seq",
+      "ip_end": "16.0.0.255",
+      "ip_offset": "1.0.0.0",
+      "ip_start": "16.0.0.0"
+    },
+    {
+      "dir": "s",
+      "distribution": "seq",
+      "ip_end": "48.0.255.255",
+      "ip_offset": "1.0.0.0",
+      "ip_start": "48.0.0.0"
+    }
+  ],
+  "program_list": [
+    {
+      "commands": [
+        {
+          "buf_index": 0,
+          "name": "tx_msg"
+        },
+        {
+          "min_pkts": 1,
+          "name": "rx_msg"
+        }
+      ],
+      "stream": false
+    },
+    {
+      "commands": [
+        {
+          "min_pkts": 1,
+          "name": "rx_msg"
+        },
+        {
+          "buf_index": 1,
+          "name": "tx_msg"
+        }
+      ],
+      "stream": false
+    }
+  ],
+  "templates": [
+    {
+      "client_template": {
+        "cluster": {},
+        "cps": 1,
+        "ip_gen": {
+          "dist_client": {
+            "index": 0
+          },
+          "dist_server": {
+            "index": 1
+          }
+        },
+        "port": 80,
+        "program_index": 0
+      },
+      "server_template": {
+        "assoc": [
+          {
+            "port": 80
+          }
+        ],
+        "program_index": 1
+      },
+      "tg_id": 0
+    }
+  ],
+  "tg_names": []
+}

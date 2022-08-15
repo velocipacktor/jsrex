@@ -1,6 +1,7 @@
 'use strict';
 
 import { default as Trex } from '../index.mjs';
+import { default as clog } from 'ee-log';
 
 const trex = new Trex({
   server: 'tcp://trex.straylight.goosga.ng:4501',
@@ -8,6 +9,7 @@ const trex = new Trex({
 
 await trex.connect();
 
-const result = await trex.methods.acquire({ session_id: 123456, force: true });
+let response = '';
 
-console.log(result);
+response = await trex.get_global_stats();
+clog.debug(response);
