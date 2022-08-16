@@ -9,7 +9,7 @@ export async function profile_fragment({
   api_h = this.api_h,
   user = this.user,
   profile_id = uuid(),
-  handler = this.handler, // Unique connection handler (from acquire())
+  handler = this.port_handler, // Unique connection handler (from acquire())
   frag_first = false, // True in case this is the first fragment
   frag_last = false, // True in case this is the last fragment
   md5 = '', // Come in first message with frag_first=true

@@ -6,7 +6,7 @@
 export async function stop({
   api_h = this.api_h,
   user = this.user,
-  handler = this.handler,
+  handler = this.port_handler,
   profile_id = null, // [optional] - profile id associated with this profile
 } = {}) {
   const response = await this.send('stop', {

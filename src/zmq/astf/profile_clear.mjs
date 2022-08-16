@@ -6,7 +6,7 @@
 export async function profile_clear({
   api_h = this.api_h,
   user = this.user,
-  handler = this.handler,
+  handler = this.port_handler,
   profile_id = null, // Profile id/name to remove
 } = {}) {
   const response = await this.send('profile_clear', {

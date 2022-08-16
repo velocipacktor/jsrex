@@ -5,7 +5,7 @@
 
 export async function get_profile_list({
   api_h = this.api_h,
-  handler = '', // Unique connection handler (from acquire())
+  handler = this.port_handler, // Unique connection handler (from acquire())
 } = {}) {
   // Send the request and wait for response
   const response = await this.send('get_profile_list', {

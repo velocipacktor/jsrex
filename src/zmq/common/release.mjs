@@ -6,7 +6,7 @@
 export async function release({
   api_h = this.api_h,
   user = this.user,
-  handler = this.handler,
+  handler = this.port_handler,
   port_id = 0, // Port to release
 } = {}) {
   // Send the request and wait for response

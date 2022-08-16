@@ -6,7 +6,7 @@
 export async function start({
   api_h = this.api_h,
   user = this.user,
-  handler = this.handler,
+  handler = this.port_handler,
   duration = 30,
   multiplier = 1,
   nc = false,
@@ -15,7 +15,7 @@ export async function start({
   client_mask = 0xffffffff, // Mask of client ports. bit is 0 ⇒ client is disabled.
   e_duration = 0, // Maximum time to wait for one flow to be established.
   t_duration = 0, // Maximum time to wait for all the flow to terminate gracefully after duration.
-  profile_id = '_',
+  profile_id = '_', // Use default profile if none specified
 } = {}) {
   const response = await this.send('start', {
     api_h: api_h,
