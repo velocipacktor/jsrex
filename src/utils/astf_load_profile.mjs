@@ -14,29 +14,27 @@ export async function astf_load_profile(profileString, profile_id) {
   // Chunk profile string
   const chunkedProfile = chunk(profileString, 10240);
 
-  await this.profile_fragment({
-    frag_first: true,
-    frag_last: false,
-    profile_id: profile_id,
-    md5: md5sum,
-    fragment: chunkedProfile[0],
-  });
-
   for (let i = 1; i < chunkedProfile.length - 1; i++) {
-    await this.profile_fragment({
-      frag_first: false,
-      frag_last: false,
+    const fragment = {
+      frag_first: null,
+      frag_last: null,
       profile_id: profile_id,
       // eslint-disable-next-line security/detect-object-injection
       fragment: chunkedProfile[i],
-    });
-  }
+    };
 
-  // Last chunk
-  await this.profile_fragment({
-    frag_first: false,
-    frag_last: true,
-    profile_id: profile_id,
-    fragment: chunkedProfile[chunkedProfile.length - 1],
-  });
+    if (i === 0) {
+      fragment.frag_first = true;
+      fragment.md5 = md5sum;
+    } else {
+      fragment.frag_first = false;
+    }
+
+    if (i === chunkedProfile.length - 1) {
+      fragment.frag_last = true;
+    } else {
+      fragment.frag_last = false;
+    }
+    await this.profile_fragment(fragment);
+  }
 }
