@@ -14,7 +14,7 @@ export async function astf_load_profile(profileString, profile_id) {
   // Chunk profile string
   const chunkedProfile = chunk(profileString, 10240);
 
-  for (let i = 1; i < chunkedProfile.length - 1; i++) {
+  for (let i = 0; i < chunkedProfile.length; i++) {
     const fragment = {
       frag_first: null,
       frag_last: null,
