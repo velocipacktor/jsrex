@@ -3,6 +3,7 @@
 // eslint-disable-next-line node/no-unpublished-import
 import { default as chunk } from 'chunk-text';
 import { createHash } from 'crypto';
+import { default as clog } from 'ee-log';
 
 // Calls profile_fragment() as necessary to upload the json profile
 
@@ -35,6 +36,7 @@ export async function astf_load_profile(profileString, profile_id) {
     } else {
       fragment.frag_last = false;
     }
-    await this.profile_fragment(fragment);
+    let response = await this.profile_fragment(fragment);
+    if (this.debug) clog.debug(response);
   }
 }
