@@ -84,14 +84,15 @@ export default class Trex extends events.EventEmitter {
     if (typeof response.error === 'undefined' && this.manage_port_handler) {
       if (typeof response.result === 'string') {
         // STL sync returns a string?
-        this.port_handler = response.result;
+        this.port_handler = response.result.toString();
+        return response;
       } else if (typeof response.result === 'object') {
         this.port_handler = response.result.handler;
+        return response;
       } else {
         throw new Error('acquire() returned invalid handler');
       }
     }
-    return response;
   }
 
   // Set/Retrieve global api_h
