@@ -39,7 +39,9 @@ export default class Trex extends events.EventEmitter {
     this.manage_port_handler = options.manage_port_handler || true;
     this.api_h = options.api_h || '';
     this.port_handler = options.port_handler || '';
-    this.api_class = options.api_class || 'ASTF';
+    this.api_name = options.api_name || 'ASTF';
+    this.api_major = options.api_major || 2;
+    this.api_minor = options.api_minor || 3;
 
     // Setup the connection
     this.zmqSock = new zmq.Request();
