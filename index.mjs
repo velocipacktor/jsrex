@@ -82,7 +82,14 @@ export default class Trex extends events.EventEmitter {
   async acquire(options) {
     const response = await this._acquire(options);
     if (typeof response.error === 'undefined' && this.manage_port_handler) {
-      this.port_handler = response.result.handler;
+      if (typeof response.result === 'string') {
+        // STL sync returns a string?
+        this.port_handler = response.result;
+      } else if (typeof response.result === 'object') {
+        this.port_handler = response.result.handler;
+      } else {
+        throw new Error('acquire() returned invalid handler');
+      }
     }
     return response;
   }
