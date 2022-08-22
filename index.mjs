@@ -23,6 +23,7 @@ import { release } from './src/zmq/common/release.mjs';
 import { add_stream } from './src/zmq/stl/add_stream.mjs';
 import { remove_stream } from './src/zmq/stl/remove_stream.mjs';
 import { start_traffic } from './src/zmq/stl/start_traffic.mjs';
+import { stop_traffic } from './src/zmq/stl/stop_traffic.mjs';
 
 // Utils
 import { astf_load_profile } from './src/utils/astf_load_profile.mjs';
@@ -68,6 +69,7 @@ export default class Trex extends events.EventEmitter {
     this.add_stream = add_stream.bind(this);
     this.remove_stream = remove_stream.bind(this);
     this.start_traffic = start_traffic.bind(this);
+    this.stop_traffic = stop_traffic.bind(this);
 
     // Utils
     this.astf_load_profile = astf_load_profile;
