@@ -11,6 +11,7 @@ export async function start_traffic({
   multiplier = 1,
   core_mask = 0xffffffff, // Mask of client ports. bit is 0 ⇒ client is disabled.
   profile_id = '_', // Use default profile if none specified
+  port_id = 0, // Use default port if none
 } = {}) {
   const response = await this.send('start_traffic', {
     api_h: api_h,
@@ -19,6 +20,7 @@ export async function start_traffic({
     profile_id: profile_id,
     duration: duration,
     core_mask: core_mask,
+    port_id: port_id,
     mul: {
       op: 'abs',
       type: 'raw',
