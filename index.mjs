@@ -6,22 +6,22 @@ import { default as events } from 'events';
 import { default as clog } from 'ee-log';
 
 // ASTF
-import { get_profile_list as _get_profile_list } from './src/zmq/astf/get_profile_list.mjs';
-import { profile_fragment as _profile_fragment } from './src/zmq/astf/profile_fragment.mjs';
-import { profile_clear as _profile_clear } from './src/zmq/astf/profile_clear.mjs';
-import { start as _start } from './src/zmq/astf/start.mjs';
-import { stop as _stop } from './src/zmq/astf/stop.mjs';
+import { get_profile_list } from './src/zmq/astf/get_profile_list.mjs';
+import { profile_fragment } from './src/zmq/astf/profile_fragment.mjs';
+import { profile_clear } from './src/zmq/astf/profile_clear.mjs';
+import { start } from './src/zmq/astf/start.mjs';
+import { stop } from './src/zmq/astf/stop.mjs';
 
 // Common
 import { acquire as _acquire } from './src/zmq/common/acquire.mjs';
 import { api_sync_v2 as _api_sync_v2 } from './src/zmq/common/api_sync_v2.mjs';
-import { get_global_stats as _get_global_stats } from './src/zmq/common/get_global_stats.mjs';
-import { get_port_status as _get_port_status } from './src/zmq/common/get_port_status.mjs';
-import { release as _release } from './src/zmq/common/release.mjs';
+import { get_global_stats } from './src/zmq/common/get_global_stats.mjs';
+import { get_port_status } from './src/zmq/common/get_port_status.mjs';
+import { release } from './src/zmq/common/release.mjs';
 
 // STL
-import { add_stream as _add_stream } from './src/zmq/stl/add_stream.mjs';
-import { remove_stream as _remove_stream } from './src/zmq/stl/remove_stream.mjs';
+import { add_stream } from './src/zmq/stl/add_stream.mjs';
+import { remove_stream } from './src/zmq/stl/remove_stream.mjs';
 
 // Utils
 import { astf_load_profile } from './src/utils/astf_load_profile.mjs';
@@ -46,44 +46,40 @@ export default class Trex extends events.EventEmitter {
 
     // Methods
     // ASTF
-    this.get_profile_list = _get_profile_list.bind(this);
-    this.profile_fragment = _profile_fragment.bind(this);
-    this.profile_clear = _profile_clear.bind(this);
-    this.start = _start.bind(this);
-    this.stop = _stop.bind(this);
+    this.get_profile_list = get_profile_list.bind(this);
+    this.profile_fragment = profile_fragment.bind(this);
+    this.profile_clear = profile_clear.bind(this);
+    this.start = start.bind(this);
+    this.stop = stop.bind(this);
 
     // Common
     // Functions acquire, api_sync_v2 handled below
-    this.__acquire = _acquire.bind(this);
-    this.__api_sync_v2 = _api_sync_v2.bind(this);
-    this.get_global_stats = _get_global_stats.bind(this);
-    this.get_port_status = _get_port_status.bind(this);
-    this.release = _release.bind(this);
+    this._acquire = _acquire.bind(this);
+    this._api_sync_v2 = _api_sync_v2.bind(this);
+    this.get_global_stats = get_global_stats.bind(this);
+    this.get_port_status = get_port_status.bind(this);
+    this.release = release.bind(this);
 
     // STL
-    this.add_stream = _add_stream.bind(this);
-    this.remove_stream = _remove_stream.bind(this);
+    this.add_stream = add_stream.bind(this);
+    this.remove_stream = remove_stream.bind(this);
 
     // Utils
     this.astf_load_profile = astf_load_profile;
   }
 
   async api_sync_v2(options) {
-    const response = await this.__api_sync_v2(options);
-    if (typeof response.error === 'undefined') {
-      if (this.manage_api_h) {
-        this.api_h = response.result.api_h;
-      }
+    const response = await this._api_sync_v2(options);
+    if (typeof response.error === 'undefined' && this.manage_api_h) {
+      this.api_h = response.result.api_h;
     }
     return response;
   }
 
   async acquire(options) {
-    const response = await this.__acquire(options);
-    if (typeof response.error === 'undefined') {
-      if (this.manage_port_handler) {
-        this.port_handler = response.result.handler;
-      }
+    const response = await this._acquire(options);
+    if (typeof response.error === 'undefined' && this.manage_port_handler) {
+      this.port_handler = response.result.handler;
     }
     return response;
   }
