@@ -39,6 +39,7 @@ export default class Trex extends events.EventEmitter {
     this.manage_port_handler = options.manage_port_handler || true;
     this.api_h = options.api_h || '';
     this.port_handler = options.port_handler || '';
+    this.api_class = options.api_class || 'ASTF';
 
     // Setup the connection
     this.zmqSock = new zmq.Request();
@@ -105,7 +106,9 @@ export default class Trex extends events.EventEmitter {
     // Connect
     await this.zmqSock.connect(this.server);
     if (this.manage_api_h) {
-      await this.api_sync_v2();
+      await this.api_sync_v2({
+        name: this.api_class,
+      });
     }
     // Emit the event
     this.emit('connected');
