@@ -109,9 +109,9 @@ export default class Trex extends events.EventEmitter {
     await this.zmqSock.connect(this.server);
     if (this.manage_api_h) {
       await this.api_sync_v2({
-        api_name: this.api_name,
-        api_major: this.api_major,
-        api_minor: this.api_minor,
+        name: this.api_name,
+        major: this.api_major,
+        minor: this.api_minor,
       });
     }
     // Emit the event
